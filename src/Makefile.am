@@ -28,8 +28,8 @@ TESTS = test-encode test-decode
 test.pb.vala: protoc-gen-vala $(srcdir)/test.proto
 	protoc --plugin=protoc-gen-vala --vala_out=. --proto_path=$(srcdir) $(srcdir)/test.proto
 
-protoc-gen_vala.stamp: protobuf-vala.vapi $(srcdir)/protoc-gen-vala.vala $(srcdir)/descriptor.pb.vala $(srcdir)/plugin.pb.vala
-	$(VALAC) -C --pkg posix --vapidir . --pkg protobuf-vala $(srcdir)/protoc-gen-vala.vala $(srcdir)/descriptor.pb.vala $(srcdir)/plugin.pb.vala
+protoc-gen_vala.stamp: protobuf-vala.c $(srcdir)/protoc-gen-vala.vala $(srcdir)/descriptor.pb.vala $(srcdir)/plugin.pb.vala
+	$(VALAC) -C --pkg posix --vapidir . --pkg protobuf-vala --pkg "glib-2.0" $(srcdir)/protoc-gen-vala.vala $(srcdir)/descriptor.pb.vala $(srcdir)/plugin.pb.vala
 	touch protoc-gen_vala.stamp
 protoc-gen-vala.c descriptor.pb.c plugin.pb.c: protoc-gen_vala.stamp    
 
